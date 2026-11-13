@@ -1,0 +1,6 @@
+# Allow all search engines to crawl the whole site
+User-agent: *
+Allow: /
+Disallow: /404.html
+
+Sitemap: https://mdvtraders.in/sitemap.xml
