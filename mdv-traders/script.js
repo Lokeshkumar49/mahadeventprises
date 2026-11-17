@@ -575,9 +575,9 @@ function setupForms() {
       const isService = type === "service";
 
       // Do not report success for a request rejected by the honeypot.
-      const honeypot = fieldValue(form, "website");
+      const honeypot = fieldValue(form, "formCheck");
       if (honeypot) {
-        showStatus(form, "error", errorHTML());
+        showStatus(form, "error", "<strong>We couldn't verify your request.</strong><br>Please refresh the page and try again.");
         return;
       }
 
