@@ -574,13 +574,6 @@ function setupForms() {
       const type = form.dataset.form; // "service" or "contact"
       const isService = type === "service";
 
-      // Do not report success for a request rejected by the honeypot.
-      const honeypot = fieldValue(form, "formCheck");
-      if (honeypot) {
-        showStatus(form, "error", "<strong>We couldn't verify your request.</strong><br>Please refresh the page and try again.");
-        return;
-      }
-
       const firstInvalid = validateForm(form);
       if (firstInvalid) {
         const el = form.elements[firstInvalid];
