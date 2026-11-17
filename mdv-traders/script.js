@@ -537,8 +537,6 @@ async function sendToGoogleSheet(payload) {
 }
 
 function setupForms() {
-  const pageLoadedAt = Date.now();
-
   // Date pickers: block past dates
   document.querySelectorAll('input[type="date"][data-min-today]').forEach((el) => {
     el.min = todayISO();
@@ -576,11 +574,10 @@ function setupForms() {
       const type = form.dataset.form; // "service" or "contact"
       const isService = type === "service";
 
-      // Spam protection: honeypot filled in, or submitted inhumanly fast (< 3 seconds)
+      // Do not report success for a request rejected by the honeypot.
       const honeypot = fieldValue(form, "website");
-      if (honeypot || Date.now() - pageLoadedAt < 3000) {
-        showStatus(form, "success", "<strong>Thank you!</strong> We have received your message.");
-        form.reset();
+      if (honeypot) {
+        showStatus(form, "error", errorHTML());
         return;
       }
 
