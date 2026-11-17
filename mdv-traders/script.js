@@ -19,7 +19,7 @@
 
 // Paste your Google Apps Script Web App URL here (see SETUP-GUIDE.md).
 // It looks like: https://script.google.com/macros/s/AKfycb..../exec
-const SCRIPT_URL = "PASTE_YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL_HERE";
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyxY8aef8MCi-9Q4lMg0E9kTNfrix64yWzQ75Cksy3hUK2LJXbRKEmJta9VORlYE2Tz/exec";
 
 // Business details – change these once and they update on every page.
 const BUSINESS = {
@@ -217,7 +217,10 @@ function renderHeader() {
   holder.innerHTML =
     '<header class="site-header">' +
       '<div class="container nav">' +
-        '<a class="logo" href="index.html" aria-label="Mahadev Enterprises – Home">' + icon("droplet") + "Mahadev <span>Enterprises</span></a>" +
+        '<div class="brand-lockup">' +
+          '<a class="logo" href="index.html" aria-label="Mahadev Enterprises – Home">' + icon("droplet") + "Mahadev <span>Enterprises</span></a>" +
+          '<span class="authorization-label">Authorised Eureka Forbes Service Center</span>' +
+        "</div>" +
         '<button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-menu" aria-label="Open menu">' + icon("menu") + "</button>" +
         '<nav class="nav-menu" id="nav-menu" aria-label="Main menu"><ul>' + links + "</ul></nav>" +
       "</div>" +

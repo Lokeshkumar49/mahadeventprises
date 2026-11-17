@@ -18,6 +18,7 @@
 // Leave as "" to turn email notifications OFF.
 const NOTIFY_EMAIL = ""; // e.g. "owner@gmail.com"
 
+const SPREADSHEET_ID = "1xLzbyTWxLmjI_p-12wA0bGo84zHWTJ5y_UT1jPhV93Y";
 const SERVICE_SHEET = "Service Requests";
 const CONTACT_SHEET = "Contacts";
 const TIMEZONE = "Asia/Kolkata";
@@ -138,7 +139,7 @@ function jsonResponse(obj) {
 
 /** Gets a tab by name, creating it (with bold, frozen headers) if needed. */
 function getSheet(name, headers) {
-  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  const ss = SpreadsheetApp.openById(SPREADSHEET_ID);
   let sheet = ss.getSheetByName(name);
   if (!sheet) sheet = ss.insertSheet(name);
   if (sheet.getLastRow() === 0) {

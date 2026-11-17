@@ -27,8 +27,8 @@ mdv-traders/
 
 ## 2. Connect the forms to Google Sheets
 
-1. Go to <https://sheets.google.com> and create a **blank spreadsheet**. Name it, e.g., "MDV Traders – Requests".
-2. In the sheet, click **Extensions > Apps Script**.
+1. Open the target [Google spreadsheet](https://docs.google.com/spreadsheets/d/1xLzbyTWxLmjI_p-12wA0bGo84zHWTJ5y_UT1jPhV93Y/edit). The script is configured to create and use the "Service Requests" and "Contacts" tabs in this file.
+2. In the spreadsheet, click **Extensions > Apps Script**.
 3. Delete any code in the editor, then paste the full contents of `google-apps-script/Code.gs`.
 4. Optional: to get an email for every new request, put your email in `const NOTIFY_EMAIL = "you@gmail.com";`
 5. Click **Save** (disk icon).
