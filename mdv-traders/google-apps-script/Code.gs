@@ -66,7 +66,7 @@ function doPost(e) {
         return jsonResponse({ status: "error", message: "Missing or invalid fields" });
       }
       const refId = validId(data.requestId, "MDV-C") || makeId("MDV-C");
-      const sheet = getSheet(CONTACT_SHEET, CONTACT_HEADERS);
+      const sheet = ensureSheet_(CONTACT_SHEET, CONTACT_HEADERS);
       sheet.appendRow([refId, timestamp, name, phone, message, "New"]);
 
       notifyOwner("New contact message – " + refId,
@@ -97,7 +97,7 @@ function doPost(e) {
     }
 
     const requestId = validId(data.requestId, "MDV") || makeId("MDV");
-    const sheet = getSheet(SERVICE_SHEET, SERVICE_HEADERS);
+    const sheet = ensureSheet_(SERVICE_SHEET, SERVICE_HEADERS);
     sheet.appendRow([
       requestId, timestamp, row.name, row.mobile, row.alt, row.email,
       row.address, row.pincode, row.product, row.serviceType, row.problem,
@@ -249,7 +249,11 @@ function jsonResponse(obj) {
 }
 
 /** Gets a tab by name, creating it (with bold, frozen headers) if needed. */
-function getSheet(name, headers) {
+function ensureSheet_(name, headers) {
+  if (!name || !Array.isArray(headers) || headers.length === 0) {
+    throw new Error("ensureSheet_ requires a sheet name and headers. Run setup() from the function dropdown.");
+  }
+
   const ss = SpreadsheetApp.openById(SPREADSHEET_ID);
   let sheet = ss.getSheetByName(name);
   if (!sheet) sheet = ss.insertSheet(name);
@@ -295,6 +299,6 @@ function notifyOwner(subject, body) {
 
 /** Run this once from the editor to create both tabs and test permissions. */
 function setup() {
-  getSheet(SERVICE_SHEET, SERVICE_HEADERS);
-  getSheet(CONTACT_SHEET, CONTACT_HEADERS);
+  ensureSheet_(SERVICE_SHEET, SERVICE_HEADERS);
+  ensureSheet_(CONTACT_SHEET, CONTACT_HEADERS);
 }
