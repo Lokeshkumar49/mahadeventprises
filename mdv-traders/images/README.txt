@@ -1,1 +1,1 @@
-Put your own photos here (hero.jpg, og-image.jpg 1200x630, product photos). Then update the image paths in index.html and script.js.
+The site includes local purifier-hero.svg and purifier-product.svg illustrations so its page images work without external image services. You can replace them with your own hero and product photos here, then update the paths in index.html and script.js. Add a 1200x630 og-image.jpg for social sharing.

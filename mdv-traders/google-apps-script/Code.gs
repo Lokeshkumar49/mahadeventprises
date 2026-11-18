@@ -33,9 +33,7 @@ const CONTACT_HEADERS = ["Reference ID", "Timestamp", "Name", "Phone", "Message"
 
 /* ---------- MAIN: receives the POST from the website ---------- */
 function doPost(e) {
-  // A lock stops two submissions writing to the same row at the same time
-  const lock = LockService.getScriptLock();
-  lock.waitLock(15000);
+  let lock = null;
 
   try {
     if (!e || !e.postData || !e.postData.contents) {
@@ -43,6 +41,14 @@ function doPost(e) {
     }
 
     const data = JSON.parse(e.postData.contents);
+
+    if (data.action) {
+      return handleAdminRequest(data);
+    }
+
+    // A lock stops two form submissions writing to the same row at the same time.
+    lock = LockService.getScriptLock();
+    lock.waitLock(15000);
 
     // Honeypot: if the hidden "website" field is filled, it's a bot – pretend success
     if (data.website) {
@@ -115,7 +121,7 @@ function doPost(e) {
     console.error(err);
     return jsonResponse({ status: "error", message: "Server error: " + err.message });
   } finally {
-    lock.releaseLock();
+    if (lock) lock.releaseLock();
   }
 }
 
@@ -125,6 +131,111 @@ function doGet() {
 }
 
 /* ---------- HELPERS ---------- */
+
+/** Admin reads are available only after a password-authenticated session. */
+function handleAdminRequest(data) {
+  const cache = CacheService.getScriptCache();
+  const action = String(data.action || "");
+
+  if (action === "adminLogin") {
+    const configuredPassword = PropertiesService.getScriptProperties().getProperty("MDV_ADMIN_PASSWORD");
+    if (!configuredPassword || configuredPassword.length < 16) {
+      return jsonResponse({
+        status: "error",
+        message: "Admin login is not configured. Set a password of at least 16 characters in Script Properties.",
+      });
+    }
+    if (!constantTimeEquals(String(data.password || ""), configuredPassword)) {
+      return jsonResponse({ status: "error", message: "Incorrect password." });
+    }
+
+    const token = Utilities.getUuid() + Utilities.getUuid();
+    cache.put("mdv-admin-" + token, "1", 21600);
+    return jsonResponse({ status: "success", token: token });
+  }
+
+  const token = String(data.token || "");
+  const sessionKey = "mdv-admin-" + token;
+  if (!token || !cache.get(sessionKey)) {
+    return jsonResponse({ status: "error", message: "Your session has expired. Please sign in again." });
+  }
+
+  if (action === "adminLogout") {
+    cache.remove(sessionKey);
+    return jsonResponse({ status: "success" });
+  }
+
+  if (action !== "adminList") {
+    return jsonResponse({ status: "error", message: "Unknown admin action." });
+  }
+
+  const pageSize = [10, 25, 50].indexOf(Number(data.pageSize)) >= 0 ? Number(data.pageSize) : 25;
+  const page = Math.max(1, Math.floor(Number(data.page) || 1));
+  const type = String(data.type || "all");
+  const status = String(data.status || "").toLowerCase();
+  const search = String(data.search || "").trim().toLowerCase().slice(0, 200);
+  let records = [];
+
+  if (type === "all" || type === "service") {
+    records = records.concat(readAdminRows(SERVICE_SHEET, SERVICE_HEADERS, "service"));
+  }
+  if (type === "all" || type === "contact") {
+    records = records.concat(readAdminRows(CONTACT_SHEET, CONTACT_HEADERS, "contact"));
+  }
+
+  records.sort(function (a, b) {
+    return adminTimestamp(b.timestamp) - adminTimestamp(a.timestamp);
+  });
+  records = records.filter(function (record) {
+    const matchesStatus = !status || String(record.status || "").toLowerCase() === status;
+    const matchesSearch = !search || JSON.stringify(record).toLowerCase().indexOf(search) >= 0;
+    return matchesStatus && matchesSearch;
+  });
+
+  const total = records.length;
+  const start = (page - 1) * pageSize;
+  return jsonResponse({
+    status: "success",
+    records: records.slice(start, start + pageSize),
+    total: total,
+    page: page,
+    pageSize: pageSize,
+  });
+}
+
+function readAdminRows(sheetName, headers, type) {
+  const sheet = SpreadsheetApp.openById(SPREADSHEET_ID).getSheetByName(sheetName);
+  if (!sheet || sheet.getLastRow() < 2) return [];
+
+  const values = sheet.getRange(2, 1, sheet.getLastRow() - 1, headers.length).getDisplayValues();
+  return values.filter(function (row) {
+    return row.some(function (value) { return value.trim() !== ""; });
+  }).map(function (row) {
+    const record = { type: type };
+    headers.forEach(function (header, index) {
+      record[header] = row[index];
+    });
+    record.timestamp = record.Timestamp || "";
+    record.status = record.Status || "";
+    return record;
+  });
+}
+
+function adminTimestamp(value) {
+  const match = String(value).match(/^(\d{2})-(\d{2})-(\d{4}) (\d{2}):(\d{2}):(\d{2})$/);
+  return match
+    ? new Date(Number(match[3]), Number(match[2]) - 1, Number(match[1]), Number(match[4]), Number(match[5]), Number(match[6])).getTime()
+    : 0;
+}
+
+function constantTimeEquals(first, second) {
+  let difference = first.length ^ second.length;
+  const length = Math.max(first.length, second.length);
+  for (let i = 0; i < length; i += 1) {
+    difference |= (first.charCodeAt(i) || 0) ^ (second.charCodeAt(i) || 0);
+  }
+  return difference === 0;
+}
 
 /**
  * Returns JSON to the website.

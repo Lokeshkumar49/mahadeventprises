@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600" role="img" aria-labelledby="title desc">
+  <title id="title">Water purifier in a bright kitchen</title>
+  <desc id="desc">Illustration of a modern water purifier beside a kitchen sink.</desc>
+  <defs>
+    <linearGradient id="wall" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#e7f8fb"/>
+      <stop offset="1" stop-color="#c5e9f2"/>
+    </linearGradient>
+    <linearGradient id="body" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#fff"/>
+      <stop offset="1" stop-color="#dceaf0"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="600" rx="36" fill="url(#wall)"/>
+  <circle cx="142" cy="112" r="52" fill="#fff" opacity=".58"/>
+  <rect x="70" y="58" width="196" height="208" rx="14" fill="#fff" opacity=".72"/>
+  <path d="M168 58v208M70 162h196" stroke="#abd9e5" stroke-width="8"/>
+  <path d="M0 435h800v165H0z" fill="#d0b99b"/>
+  <path d="M0 435h800v20H0z" fill="#b69d7f"/>
+  <rect x="0" y="456" width="800" height="144" fill="#eadfce"/>
+  <path d="M96 435V260h84v175" fill="#fff" opacity=".7"/>
+  <rect x="438" y="138" width="248" height="296" rx="28" fill="url(#body)" stroke="#b9d1da" stroke-width="5"/>
+  <path d="M465 175h194v17H465z" rx="8" fill="#f3fbfd"/>
+  <path d="M501 219h122" stroke="#c1d9e1" stroke-width="8" stroke-linecap="round"/>
+  <circle cx="562" cy="270" r="28" fill="#e8f7fb"/>
+  <path d="M562 247c-10 15-14 21-14 29a14 14 0 0 0 28 0c0-8-4-14-14-29z" fill="#19a5c2"/>
+  <rect x="527" y="334" width="70" height="9" rx="5" fill="#d1e4e9"/>
+  <path d="M515 434v24h94v-24" fill="#9eb8c2"/>
+  <rect x="485" y="456" width="154" height="12" rx="6" fill="#899fa8"/>
+  <path d="M639 290h45v12h-25v58h-12v-58h-8z" fill="#7f9ba5"/>
+  <path d="M659 359c-5 8-7 11-7 15a7 7 0 0 0 14 0c0-4-2-7-7-15z" fill="#37bad1"/>
+  <rect x="282" y="388" width="124" height="47" rx="8" fill="#fff" stroke="#b7cbd0" stroke-width="4"/>
+  <path d="M294 404h100v18H294z" fill="#d7eef2"/>
+  <path d="M326 388v-30a34 34 0 0 1 68 0v30" fill="none" stroke="#7f9ba5" stroke-width="10" stroke-linecap="round"/>
+  <path d="M345 357h49" stroke="#7f9ba5" stroke-width="10" stroke-linecap="round"/>
+  <path d="M366 360v16" stroke="#19a5c2" stroke-width="5" stroke-linecap="round"/>
+  <rect x="72" y="432" width="656" height="20" rx="10" fill="#a88c6d"/>
+  <path d="M350 475v125m110-125v125" stroke="#c8b49a" stroke-width="16"/>
+</svg>

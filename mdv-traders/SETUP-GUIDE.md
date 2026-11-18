@@ -11,9 +11,11 @@ mdv-traders/
 ├── services.html           Services + RO spare parts
 ├── service-request.html    Service request form -> Google Sheets
 ├── contact.html            Contact details, form, map
+├── admin.html              Password-protected queries dashboard
 ├── terms.html              Terms & Conditions
 ├── 404.html                Custom "page not found"
-├── style.css               All styles (colours at the top)
+├── style.css               Main website styles
+├── admin.css / admin.js    Dashboard styles and functionality
 ├── script.js               All JavaScript + your settings, products & parts
 ├── favicon.svg             Placeholder icon
 ├── sitemap.xml
@@ -44,19 +46,27 @@ mdv-traders/
    ```
 10. Test: open the URL in your browser. You should see `{"status":"ok", ...}`. Then submit the form on your website and check the sheet.
 
-**Changing Code.gs later?** Go to **Deploy > Manage deployments > Edit (pencil) > Version: New version > Deploy**. The URL stays the same. If you make a *new* deployment instead, the URL changes and you'll need to update `script.js`.
+**Changing Code.gs later?** Go to **Deploy > Manage deployments > Edit (pencil) > Version: New version > Deploy**. The URL stays the same. If you make a *new* deployment instead, the URL changes and you'll need to update the script URL in both `script.js` and `admin.js`.
 
 **Status column:** each new row starts as "New". You can change it to "Assigned", "Done", etc. To make it a dropdown, select column N > **Data > Data validation > Dropdown**.
+
+### Admin dashboard
+
+1. In Apps Script, open **Project Settings > Script Properties** and add `MDV_ADMIN_PASSWORD` with a unique password of at least 16 characters. The `.env.example` file is a reference only; Apps Script does not load local `.env` files. Do not put the real password in website files or commit it.
+2. Deploy the updated Apps Script as a **new version** of the existing web app deployment.
+3. Open `https://mdvtraders.in/admin.html` and sign in. The dashboard lists service requests and contact messages with search, type/status filters and pagination. The browser only receives the current page of rows, and its session expires after six hours.
+
+When testing the site from localhost, `admin.js` still sends sign-in and query requests to the deployed Apps Script URL, so the password must be set in that deployment's Script Properties. A local `.env` file is not loaded by the browser or Apps Script.
 
 ## 3. Placeholders to replace
 
 | Where | What to change |
 |---|---|
-| `script.js` > `SCRIPT_URL` | Your Google Apps Script Web App URL |
+| `script.js` and `admin.js` > script URL | Your Google Apps Script Web App URL |
 | `script.js` > `BUSINESS` | phone (shown), phoneLink (tel:), whatsapp (91 + number, no +), email, address, serviceArea, hours, brands |
-| `script.js` > `PRODUCTS` | Product names, descriptions, features and **image** links (currently placehold.co) |
+| `script.js` > `PRODUCTS` | Product names, descriptions, features and **image** links (local SVG artwork is supplied) |
 | `script.js` > `SPARE_PARTS` | Add/remove parts if needed |
-| `index.html` hero `<img>` | Hero photo (currently placehold.co) |
+| `index.html` hero `<img>` | Hero illustration (`images/purifier-hero.svg`) |
 | `index.html` testimonials | 3 sample reviews marked "Sample review – replace" |
 | `index.html` + `contact.html` JSON-LD | `[ADD NUMBER]`, `[ADD EMAIL]`, `[ADD ADDRESS]`, `[ADD CITY]`, `[ADD STATE]`, `[ADD PINCODE]`, `[ADD CITIES / AREAS]`, `[ADD HOURS]` |
 | `contact.html` map iframe | Google Maps embed link: Maps > your shop > Share > Embed a map |

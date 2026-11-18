@@ -19,7 +19,7 @@
 
 // Paste your Google Apps Script Web App URL here (see SETUP-GUIDE.md).
 // It looks like: https://script.google.com/macros/s/AKfycb..../exec
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyxY8aef8MCi-9Q4lMg0E9kTNfrix64yWzQ75Cksy3hUK2LJXbRKEmJta9VORlYE2Tz/exec";
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyMlbXetxnHBcHcLdgWY4TU7fw3yeHx3X2-BlZRNCH6FLQaxBGpeBiQd_yG2jLCtyQX/exec";
 
 // Business details – change these once and they update on every page.
 const BUSINESS = {
@@ -39,14 +39,14 @@ const BUSINESS = {
    2. PRODUCT LIST
    To add a product: copy one { ... } block, paste it, and edit.
    category must be "domestic" or "commercial".
-   PLACEHOLDER IMAGES: replace each "image" with your own photo,
+   The supplied local illustration can be replaced with product photos,
    e.g. "images/ro-purifier.jpg" (600 x 450 px works well).
    --------------------------------------------------------- */
 const PRODUCTS = [
   {
     name: "RO Water Purifier",
     category: "domestic",
-    image: "https://placehold.co/600x450/e8f7fb/0b6fb8?text=RO+Purifier%0A(Placeholder)",
+    image: "images/purifier-product.svg",
     description: "Removes dissolved salts, heavy metals and impurities. Ideal for borewell or high-TDS water.",
     features: ["Multi-stage RO purification", "7–10 litre storage tank", "Suitable for TDS up to 2000 ppm"],
     featured: true,
@@ -54,7 +54,7 @@ const PRODUCTS = [
   {
     name: "RO + UV Water Purifier",
     category: "domestic",
-    image: "https://placehold.co/600x450/e8f7fb/0b6fb8?text=RO+%2B+UV%0A(Placeholder)",
+    image: "images/purifier-product.svg",
     description: "Double protection: RO removes dissolved impurities and UV kills bacteria and viruses.",
     features: ["RO + UV double purification", "Auto shut-off when tank is full", "Wall-mount or counter-top"],
     featured: true,
@@ -62,7 +62,7 @@ const PRODUCTS = [
   {
     name: "RO + UV + TDS Controller",
     category: "domestic",
-    image: "https://placehold.co/600x450/e8f7fb/0b6fb8?text=RO+%2B+UV+%2B+TDS%0A(Placeholder)",
+    image: "images/purifier-product.svg",
     description: "Keeps healthy natural minerals in your water with an adjustable TDS controller.",
     features: ["Retains essential minerals", "Adjustable taste (TDS)", "Filter-change indicator"],
     featured: true,
@@ -70,28 +70,28 @@ const PRODUCTS = [
   {
     name: "UV Water Purifier",
     category: "domestic",
-    image: "https://placehold.co/600x450/e8f7fb/0b6fb8?text=UV+Purifier%0A(Placeholder)",
+    image: "images/purifier-product.svg",
     description: "Best for low-TDS municipal or corporation water. Kills germs without wasting water.",
     features: ["Zero water wastage", "Instant purification", "Low maintenance"],
   },
   {
     name: "UF Water Purifier",
     category: "domestic",
-    image: "https://placehold.co/600x450/e8f7fb/0b6fb8?text=UF+Purifier%0A(Placeholder)",
+    image: "images/purifier-product.svg",
     description: "Works without electricity. Removes bacteria, cysts and suspended particles.",
     features: ["No electricity needed", "Hollow-fibre UF membrane", "Budget friendly"],
   },
   {
     name: "Gravity-Based Purifier",
     category: "domestic",
-    image: "https://placehold.co/600x450/e8f7fb/0b6fb8?text=Gravity+Purifier%0A(Placeholder)",
+    image: "images/purifier-product.svg",
     description: "Simple, portable purifier for homes with low-TDS water and irregular power supply.",
     features: ["No electricity or tap connection", "Easy to clean", "Large storage capacity"],
   },
   {
     name: "Commercial RO Plant (25 – 100 LPH)",
     category: "commercial",
-    image: "https://placehold.co/600x450/e8f7fb/0b6fb8?text=Commercial+RO%0A(Placeholder)",
+    image: "images/purifier-product.svg",
     description: "For offices, schools, clinics, restaurants and small businesses.",
     features: ["25 to 100 litres per hour", "Stainless steel / FRP options", "Installation & AMC available"],
     featured: true,
@@ -99,7 +99,7 @@ const PRODUCTS = [
   {
     name: "Industrial RO Plant (250 – 2000 LPH)",
     category: "commercial",
-    image: "https://placehold.co/600x450/e8f7fb/0b6fb8?text=Industrial+RO%0A(Placeholder)",
+    image: "images/purifier-product.svg",
     description: "High-capacity plants for factories, hospitals, hostels, apartments and packaged water.",
     features: ["250 to 2000+ litres per hour", "Custom design for your water", "Site survey & water test"],
   },
@@ -326,7 +326,7 @@ function productCardHTML(p) {
 
   return (
     '<article class="card product-card" data-category="' + p.category + '">' +
-      // PLACEHOLDER IMAGE – replace in the PRODUCTS list above
+      // Replace the supplied illustration in PRODUCTS when product photos are available.
       '<img class="product-card__img" src="' + p.image + '" alt="' + escapeHTML(p.name) + '" loading="lazy" width="600" height="450">' +
       '<div class="product-card__body">' +
         '<span class="product-card__tag">' + (p.category === "commercial" ? "Commercial" : "Domestic") + "</span>" +

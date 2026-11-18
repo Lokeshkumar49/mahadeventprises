@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Admin Dashboard | MDV Traders</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="admin.css">
+  <script src="admin.js" defer></script>
+</head>
+<body>
+  <main class="admin-shell">
+    <header class="admin-header">
+      <a class="admin-brand" href="index.html">MDV <span>Traders</span></a>
+      <p>Request management</p>
+    </header>
+
+    <section class="login-card" id="login-panel" aria-labelledby="login-title">
+      <h1 id="login-title">Admin sign in</h1>
+      <p>Sign in to view service requests and contact messages.</p>
+      <form id="login-form">
+        <label for="password">Admin password</label>
+        <input id="password" name="password" type="password" autocomplete="current-password" required>
+        <button class="button button--primary" type="submit">Sign in</button>
+      </form>
+      <p class="notice" id="login-notice" role="status" aria-live="polite"></p>
+    </section>
+
+    <section class="dashboard" id="dashboard" hidden aria-labelledby="dashboard-title">
+      <div class="dashboard-heading">
+        <div>
+          <h1 id="dashboard-title">Customer queries</h1>
+          <p>Service requests and contact messages</p>
+        </div>
+        <button class="button button--secondary" id="logout-button" type="button">Sign out</button>
+      </div>
+
+      <div class="toolbar" aria-label="Query filters">
+        <label class="search-control" for="search-input">
+          Search
+          <input id="search-input" type="search" placeholder="Name, phone, message, request ID…">
+        </label>
+        <label for="type-filter">Query type
+          <select id="type-filter">
+            <option value="all">All queries</option>
+            <option value="service">Service requests</option>
+            <option value="contact">Contact messages</option>
+          </select>
+        </label>
+        <label for="status-filter">Status
+          <select id="status-filter">
+            <option value="">All statuses</option>
+            <option value="new">New</option>
+            <option value="assigned">Assigned</option>
+            <option value="in progress">In Progress</option>
+            <option value="done">Done</option>
+            <option value="closed">Closed</option>
+          </select>
+        </label>
+        <label for="page-size">Rows per page
+          <select id="page-size">
+            <option value="10">10</option>
+            <option value="25" selected>25</option>
+            <option value="50">50</option>
+          </select>
+        </label>
+      </div>
+
+      <p class="notice" id="dashboard-notice" role="status" aria-live="polite"></p>
+      <div class="table-frame">
+        <table>
+          <thead>
+            <tr>
+              <th scope="col">Type</th>
+              <th scope="col">Reference ID</th>
+              <th scope="col">Received</th>
+              <th scope="col">Name</th>
+              <th scope="col">Phone</th>
+              <th scope="col">Alternate</th>
+              <th scope="col">Email</th>
+              <th scope="col">Address</th>
+              <th scope="col">Pincode</th>
+              <th scope="col">Product / Model</th>
+              <th scope="col">Service / Message</th>
+              <th scope="col">Problem</th>
+              <th scope="col">Preferred date</th>
+              <th scope="col">Time slot</th>
+              <th scope="col">Status</th>
+            </tr>
+          </thead>
+          <tbody id="query-rows"></tbody>
+        </table>
+      </div>
+      <footer class="table-footer">
+        <p id="result-count" aria-live="polite"></p>
+        <div class="pagination">
+          <button class="button button--secondary" id="previous-page" type="button">Previous</button>
+          <span id="page-indicator"></span>
+          <button class="button button--secondary" id="next-page" type="button">Next</button>
+        </div>
+      </footer>
+    </section>
+  </main>
+</body>
+</html>
