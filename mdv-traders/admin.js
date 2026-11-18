@@ -1,4 +1,4 @@
-const ADMIN_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyMlbXetxnHBcHcLdgWY4TU7fw3yeHx3X2-BlZRNCH6FLQaxBGpeBiQd_yG2jLCtyQX/exec";
+const ADMIN_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxHNTnUc4QcgtE3LLeP9GGLrBYcuzRUsP6FDhXPmUx7xUMnqRwXFDe5FvzRAlkCK7Tm/exec";
 const SESSION_KEY = "mdv-admin-session";
 const COLUMNS = [
   ["type", "type"],

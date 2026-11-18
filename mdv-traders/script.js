@@ -19,7 +19,7 @@
 
 // Paste your Google Apps Script Web App URL here (see SETUP-GUIDE.md).
 // It looks like: https://script.google.com/macros/s/AKfycb..../exec
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyMlbXetxnHBcHcLdgWY4TU7fw3yeHx3X2-BlZRNCH6FLQaxBGpeBiQd_yG2jLCtyQX/exec";
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxHNTnUc4QcgtE3LLeP9GGLrBYcuzRUsP6FDhXPmUx7xUMnqRwXFDe5FvzRAlkCK7Tm/exec";
 
 // Business details – change these once and they update on every page.
 const BUSINESS = {
